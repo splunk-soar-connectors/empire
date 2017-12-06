@@ -1,6 +1,16 @@
-# -----------------------------------------
-# Phantom sample App Connector python file
-# -----------------------------------------
+# --
+# File: empire_connector.py
+#
+# Copyright (c) Phantom Cyber Corporation, 2016-2017
+#
+# This unpublished material is proprietary to Phantom Cyber.
+# All rights reserved. The methods and
+# techniques described herein are considered trade secrets
+# and/or confidential. Reproduction or distribution, in whole
+# or in part, is forbidden except by express written permission
+# of Phantom Cyber Corporation.
+#
+# --
 
 # Phantom App imports
 import phantom.app as phantom
@@ -265,6 +275,9 @@ class EmpireConnector(BaseConnector):
 
                     # Delete the agent results
                     ret_val, response = self._make_rest_call('agents/{0}/results'.format(agent_name), action_result, params=None, headers=None, method="delete")
+                    if (phantom.is_fail(ret_val)):
+                        self.save_progress("Deleting agent results failed: {0}".format(action_result.get_message()))
+                        return action_result.get_status()
 
                     return action_result.set_status(phantom.APP_SUCCESS)
 
@@ -275,6 +288,9 @@ class EmpireConnector(BaseConnector):
 
                     # Delete the agent results
                     ret_val, response = self._make_rest_call('agents/{0}/results'.format(agent_name), action_result, params=None, headers=None, method="delete")
+                    if (phantom.is_fail(ret_val)):
+                        self.save_progress("Deleting agent results failed: {0}".format(action_result.get_message()))
+                        return action_result.get_status()
 
                     return action_result.set_status(phantom.APP_SUCCESS)
 
@@ -429,6 +445,9 @@ class EmpireConnector(BaseConnector):
 
         # Delete the agent results
         ret_val, response = self._make_rest_call('agents/{0}/results'.format(agent_name), action_result, params=None, headers=None, method="delete")
+        if (phantom.is_fail(ret_val)):
+            self.save_progress("Deleting agent results failed: {0}".format(action_result.get_message()))
+            return action_result.get_status()
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_kill_agent(self, param):
@@ -563,8 +582,6 @@ class EmpireConnector(BaseConnector):
         ret_val, response = self._make_rest_call(endpoint, action_result, params=None, headers=None, data=data, method="post")
 
         if (phantom.is_fail(ret_val)):
-            # the call to the 3rd party device or service failed, action result should contain all the error details
-            # so just return from here
             return action_result.get_status()
 
         # Now post process the data,  uncomment code as you deem fit
@@ -598,21 +615,12 @@ class EmpireConnector(BaseConnector):
         ret_val, response = self._make_rest_call(endpoint, action_result, params=None, headers=None)
 
         if (phantom.is_fail(ret_val)):
-            # the call to the 3rd party device or service failed, action result should contain all the error details
-            # so just return from here
             return action_result.get_status()
 
-        # Now post process the data,  uncomment code as you deem fit
-
-        # Add the response into the data section
         action_result.add_data(response)
-
-        # Add a dictionary that is made up of the most important values from data into the summary
         summary = action_result.update_summary({})
         summary['total_agents'] = len(response.get("agents", []))
 
-        # Return success, no need to set the message, only the status
-        # BaseConnector will create a textual message based off of the summary dictionary
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_create_stager(self, param):
@@ -644,42 +652,25 @@ class EmpireConnector(BaseConnector):
         ret_val, response = self._make_rest_call('stagers', action_result, params=None, headers=None, data=data, method="post")
 
         if (phantom.is_fail(ret_val)):
-            # the call to the 3rd party device or service failed, action result should contain all the error details
-            # so just return from here
             return action_result.get_status()
 
-        # Now post process the data,  uncomment code as you deem fit
-
-        # Add the response into the data section
         action_result.add_data(response)
-        # Add a dictionary that is made up of the most important values from data into the summary
         summary = action_result.update_summary({})
         summary['StagerCreated'] = "True"
 
-        # Return success, no need to set the message, only the status
-        # BaseConnector will create a textual message based off of the summary dictionary
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_get_stager(self, param):
 
-        # Implement the handler here
-        # use self.save_progress(...) to send progress messages back to the platform
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
 
-        # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
-
-        # Required values can be accessed directly
         stager_name = param['stager_name']
         # make rest call
         ret_val, response = self._make_rest_call('stagers/{0}'.format(stager_name), action_result, params=None, headers=None)
 
         if (phantom.is_fail(ret_val)):
-            # the call to the 3rd party device or service failed, action result should contain all the error details
-            # so just return from here
             return action_result.get_status()
-
-        # Now post process the data,  uncomment code as you deem fit
 
         # Add the response into the data section
         action_result.add_data(response)
@@ -688,28 +679,19 @@ class EmpireConnector(BaseConnector):
         summary = action_result.update_summary({})
         summary['total_stagers'] = len(response.get("stagers", 0))
 
-        # Return success, no need to set the message, only the status
-        # BaseConnector will create a textual message based off of the summary dictionary
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_list_stagers(self, param):
 
-        # Implement the handler here
-        # use self.save_progress(...) to send progress messages back to the platform
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
 
-        # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         # make rest call
         ret_val, response = self._make_rest_call('stagers', action_result, params=None, headers=None)
 
         if (phantom.is_fail(ret_val)):
-            # the call to the 3rd party device or service failed, action result should contain all the error details
-            # so just return from here
             return action_result.get_status()
-
-        # Now post process the data,  uncomment code as you deem fit
 
         # Add the response into the data section
         action_result.add_data(response)
@@ -717,54 +699,39 @@ class EmpireConnector(BaseConnector):
         summary = action_result.update_summary({})
         summary['total_stagers'] = len(response.get("stagers", 0))
 
-        # Return success, no need to set the message, only the status
-        # BaseConnector will create a textual message based off of the summary dictionary
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_get_listener_options(self, param):
 
-        # Implement the handler here
-        # use self.save_progress(...) to send progress messages back to the platform
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
 
         # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        # Required values can be accessed directly
         listener_type = param['listener_type']
 
         # make rest call
         ret_val, response = self._make_rest_call('listeners/options/{0}'.format(listener_type), action_result, params=None, headers=None)
 
         if (phantom.is_fail(ret_val)):
-            # the call to the 3rd party device or service failed, action result should contain all the error details
-            # so just return from here
             return action_result.get_status()
 
-        # Add the response into the data section
         action_result.add_data(response)
 
         # Add a dictionary that is made up of the most important values from data into the summary
         summary = action_result.update_summary({})
         summary['listener_found'] = "True"
 
-        # Return success, no need to set the message, only the status
-        # BaseConnector will create a textual message based off of the summary dictionary
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_create_listener(self, param):
 
-        # Implement the handler here
-        # use self.save_progress(...) to send progress messages back to the platform
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
 
-        # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        # Required values can be accessed directly
         listener_type = param['listener_type']
         listener_name = param['listener_name']
-        # Optional values should use the .get() function
         options = param.get('options', 'None')
 
         if options is None:
@@ -780,11 +747,7 @@ class EmpireConnector(BaseConnector):
         ret_val, response = self._make_rest_call('listeners/{0}'.format(listener_type), action_result, params=None, headers=None, data=data, method="post")
 
         if (phantom.is_fail(ret_val)):
-            # the call to the 3rd party device or service failed, action result should contain all the error details
-            # so just return from here
             return action_result.get_status()
-
-        # Now post process the data,  uncomment code as you deem fit
 
         # Add the response into the data section
         action_result.add_data(response)
@@ -793,36 +756,25 @@ class EmpireConnector(BaseConnector):
         summary = action_result.update_summary({})
         summary['success'] = response.get("success", "Failed")
 
-        # Return success, no need to set the message, only the status
-        # BaseConnector will create a textual message based off of the summary dictionary
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_get_listener(self, param):
 
-        # Implement the handler here
-        # use self.save_progress(...) to send progress messages back to the platform
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
 
         # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        # Required values can be accessed directly
         listener_name = param['listener_name']
 
         # make rest call
         ret_val, response = self._make_rest_call('listeners/{0}'.format(listener_name), action_result, params=None, headers=None)
 
         if (phantom.is_fail(ret_val)):
-            # the call to the 3rd party device or service failed, action result should contain all the error details
-            # so just return from here
             return action_result.get_status()
-
-        # Now post process the data,  uncomment code as you deem fit
 
         # Add the response into the data section
         action_result.add_data(response)
-
-        # Add a dictionary that is made up of the most important values from data into the summary
         summary = action_result.update_summary({})
         listener_info = response.get("listeners", ["None returned"])[0]
         if listener_info != "None returned":
@@ -831,14 +783,10 @@ class EmpireConnector(BaseConnector):
         else:
             summary["listener_module"] = listener_info
 
-        # Return success, no need to set the message, only the status
-        # BaseConnector will create a textual message based off of the summary dictionary
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_list_listeners(self, param):
 
-        # Implement the handler here
-        # use self.save_progress(...) to send progress messages back to the platform
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
 
         # Add an action result object to self (BaseConnector) to represent the action for this param
@@ -848,11 +796,7 @@ class EmpireConnector(BaseConnector):
         ret_val, response = self._make_rest_call('listeners', action_result, params=None, headers=None)
 
         if (phantom.is_fail(ret_val)):
-            # the call to the 3rd party device or service failed, action result should contain all the error details
-            # so just return from here
             return action_result.get_status()
-
-        # Now post process the data,  uncomment code as you deem fit
 
         # Add the response into the data section
         action_result.add_data(response)
@@ -861,8 +805,6 @@ class EmpireConnector(BaseConnector):
         summary = action_result.update_summary({})
         summary['total_listeners'] = len(response.get("listeners", 0))
 
-        # Return success, no need to set the message, only the status
-        # BaseConnector will create a textual message based off of the summary dictionary
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def handle_action(self, param):
@@ -876,58 +818,40 @@ class EmpireConnector(BaseConnector):
 
         if action_id == 'test_connectivity':
             ret_val = self._handle_test_connectivity(param)
-
         elif action_id == 'get_credentials':
             ret_val = self._handle_get_credentials(param)
-
         elif action_id == 'execute_module':
             ret_val = self._handle_execute_module(param)
-
         elif action_id == 'get_module':
             ret_val = self._handle_get_module(param)
-
         elif action_id == 'list_modules':
             ret_val = self._handle_list_modules(param)
-
         elif action_id == 'get_agent_results':
             ret_val = self._handle_get_agent_results(param)
-
         elif action_id == 'kill_agent':
             ret_val = self._handle_kill_agent(param)
-
         elif action_id == 'remove_agent':
             ret_val = self._handle_remove_agent(param)
-
         elif action_id == 'execute_command':
             ret_val = self._handle_execute_command(param)
-
         elif action_id == 'list_agents':
             ret_val = self._handle_list_agents(param)
-
         elif action_id == 'create_stager':
             ret_val = self._handle_create_stager(param)
-
         elif action_id == 'get_stager':
             ret_val = self._handle_get_stager(param)
-
         elif action_id == 'list_stagers':
             ret_val = self._handle_list_stagers(param)
-
         elif action_id == 'get_listener_options':
             ret_val = self._handle_get_listener_options(param)
-
         elif action_id == 'create_listener':
             ret_val = self._handle_create_listener(param)
-
         elif action_id == 'get_listener':
             ret_val = self._handle_get_listener(param)
-
         elif action_id == 'list_listeners':
             ret_val = self._handle_list_listeners(param)
-
         elif action_id == 'kill_listener':
             ret_val = self._handle_kill_listener(param)
-
         return ret_val
 
     def finalize(self):
