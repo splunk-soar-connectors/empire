@@ -677,7 +677,10 @@ class EmpireConnector(BaseConnector):
 
         # Add a dictionary that is made up of the most important values from data into the summary
         summary = action_result.update_summary({})
-        summary['total_stagers'] = len(response.get("stagers", 0))
+        if len(response.get("stagers", 0)) >= 1:
+            summary['stager_found'] = True
+        else:
+            summary['stager_found'] = False
 
         return action_result.set_status(phantom.APP_SUCCESS)
 

@@ -12,7 +12,7 @@
     "app_version": "1.0.3",
     "utctime_updated": "2017-11-16T20:50:54.713602Z",
     "package_name": "phantom_empire",
-    "main_module": "empire_connector.py",
+    "main_module": "empire_connector.pyc",
     "min_phantom_version": "3.0.251",
     "app_wizard_version": "1.0.0",
     "configuration": {
