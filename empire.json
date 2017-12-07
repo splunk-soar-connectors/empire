@@ -13,7 +13,7 @@
     "utctime_updated": "2017-11-16T20:50:54.713602Z",
     "package_name": "phantom_empire",
     "main_module": "empire_connector.py",
-    "min_phantom_version": "3.0.264",
+    "min_phantom_version": "3.0.251",
     "app_wizard_version": "1.0.0",
     "configuration": {
         "base_url": {
