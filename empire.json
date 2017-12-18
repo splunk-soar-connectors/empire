@@ -57,7 +57,7 @@
         {
             "action": "get credentials",
             "identifier": "get_credentials",
-            "description": "Get stored credentials in Empire",
+            "description": "Get compromised credentials stored in Empire",
             "verbose": "",
             "type": "generic",
             "read_only": true,
@@ -1396,7 +1396,7 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "kill server",
+            "action": "terminate server",
             "identifier": "kill_listener",
             "description": "Kill a listener in Empire",
             "verbose": "This terminates the listener(s) on the empire server.",
@@ -1492,10 +1492,10 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "kill agent",
+            "action": "terminate endpoint",
             "identifier": "kill_agent",
-            "description": "Kill an agent in Empire",
-            "verbose": "This instructs the process on the remote machine to terminate. ",
+            "description": "Kill an agent on an endpoint in Empire",
+            "verbose": "This instructs the process on the remote machine to terminate",
             "type": "generic",
             "read_only": false,
             "parameters": {
@@ -1594,7 +1594,7 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "remove agent",
+            "action": "remove endpoint",
             "identifier": "remove_agent",
             "description": "Remove an agent in Empire",
             "verbose": "This removes an agent from the Empire server database.  It is usually best to kill agent first.",
@@ -1692,7 +1692,7 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "list agents",
+            "action": "list endpoints",
             "identifier": "list_agents",
             "description": "Returns all current agents in Empire",
             "verbose": "",
