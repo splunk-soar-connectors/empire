@@ -8,7 +8,7 @@
     "product_name": "Empire",
     "product_version_regex": ".*",
     "publisher": "Phantom",
-    "license": "Copyright (c) Phantom Cyber Corporation 2017",
+    "license": "Copyright (c) Phantom Cyber Corporation, 2017",
     "app_version": "1.0.6",
     "utctime_updated": "2017-12-19T23:42:59.000000Z",
     "package_name": "phantom_empire",
@@ -97,7 +97,7 @@
                     "data_path": "action_result.data.*.creds.*.username",
                     "data_type": "string",
                     "example_values": [
-                        "DESHAW\\tim"
+                        "DESHAW\\herman"
                     ],
                     "contains": [
                         "user name"
@@ -148,7 +148,7 @@
                     "data_path": "action_result.data.*.creds.*.password",
                     "data_type": "string",
                     "example_values": [
-                        "Ph4nt0m"
+                        "genericpassword"
                     ]
                 },
                 {
@@ -355,7 +355,7 @@
                     "data_type": "string",
                     "example_values": [
                         "Job started: 416Y98",
-                        "CORP\\\\timfrazier"
+                        "CORP\\\\herman"
                     ]
                 },
                 {
@@ -1926,7 +1926,7 @@
                     "data_path": "action_result.data.*.agents.*.username",
                     "data_type": "string",
                     "example_values": [
-                        "WIN-1DOIUPRU4D8\\Tim"
+                        "WIN-1DOIUPRU4D8\\Herman"
                     ],
                     "column_order": 2,
                     "column_name": "Username",
