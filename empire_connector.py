@@ -50,13 +50,20 @@ class EmpireConnector(BaseConnector):
         url = self._base_url + '/api/admin/login'
         data = {"username": config['username'], "password": config['password']}
         try:
-            self.save_progress("Getting authentication token.")
+            self.save_progress("Getting authentication token")
             login_resp = requests.post(url, params=None, json=data, verify=self._verify)
         except Exception as e:
             return self.set_status(phantom.APP_ERROR, "Error acquiring auth token.  Details: {0}".format(str(e)))
 
-        self._token = login_resp.json()['token']
-        self.save_progress("Got authentication successfully.")
+        if login_resp.status_code == 401:
+            self.save_progress("Incorrect Username or Password for accessing the Empire REST API")
+            return phantom.APP_ERROR
+        try:
+            self._token = login_resp.json()['token']
+            self.save_progress("Got authentication successfully.")
+        except Exception as e:
+            return self.set_status(phantom.APP_ERROR, "Error acquiring auth token.  Details: {0}".format(str(e)))
+
         return phantom.APP_SUCCESS
 
     def _process_empty_reponse(self, response, action_result):
