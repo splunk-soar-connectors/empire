@@ -3291,10 +3291,9 @@
                 {
                     "data_path": "action_result.parameter.listener_type",
                     "data_type": "string",
-                    "column_name": "listener_type",
-                    "column_order": 0,
                     "example_values": [
-                        "dbx"
+                        "dbx",
+                        "http"
                     ],
                     "contains": [
                         "empire listener type"
@@ -3303,8 +3302,6 @@
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
-                    "column_name": "status",
-                    "column_order": 1,
                     "example_values": [
                         "success"
                     ]
@@ -3331,387 +3328,50 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.listeneroptions.SlackToken.Required",
+                    "data_path": "action_result.summary.listener_found",
+                    "data_type": "string",
+                    "example_values": [
+                        "True"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.Required",
                     "data_type": "boolean",
+                    "column_name": "Required",
+                    "column_order": 1,
                     "example_values": [
                         true,
                         false
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.listeneroptions.SlackToken.Description",
+                    "data_path": "action_result.data.*.Name",
                     "data_type": "string",
+                    "column_name": "Option Name",
+                    "column_order": 0,
                     "example_values": [
-                        "Your SlackBot API token to communicate with your Slack instance."
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.SlackToken.Value",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.KillDate.Required",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.KillDate.Description",
-                    "data_type": "string",
-                    "example_values": [
-                        "Date for the listener to exit (MM/dd/yyyy)."
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.KillDate.Value",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.BaseFolder.Required",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.BaseFolder.Description",
-                    "data_type": "string",
-                    "example_values": [
-                        "The base Dropbox folder to use for comms."
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.BaseFolder.Value",
-                    "data_type": "string",
-                    "example_values": [
-                        "/Empire/"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.ResultsFolder.Required",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.ResultsFolder.Description",
-                    "data_type": "string",
-                    "example_values": [
-                        "The nested Dropbox results folder."
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.ResultsFolder.Value",
-                    "data_type": "string",
-                    "example_values": [
-                        "/results/"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.Launcher.Required",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.Launcher.Description",
-                    "data_type": "string",
-                    "example_values": [
-                        "Launcher string."
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.Launcher.Value",
-                    "data_type": "string",
-                    "example_values": [
-                        "powershell -noP -sta -w 1 -enc "
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.DefaultProfile.Required",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.DefaultProfile.Description",
-                    "data_type": "string",
-                    "example_values": [
-                        "Default communication profile for the agent."
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.DefaultProfile.Value",
-                    "data_type": "string",
-                    "example_values": [
-                        "/admin/get.php,/news.php,/login/process.php|Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.TaskingsFolder.Required",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.TaskingsFolder.Description",
-                    "data_type": "string",
-                    "example_values": [
-                        "The nested Dropbox taskings folder."
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.TaskingsFolder.Value",
-                    "data_type": "string",
-                    "example_values": [
-                        "/taskings/"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.DefaultDelay.Required",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.DefaultDelay.Description",
-                    "data_type": "string",
-                    "example_values": [
-                        "Agent delay/reach back interval (in seconds)."
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.DefaultDelay.Value",
-                    "data_type": "numeric",
-                    "example_values": [
-                        60
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.APIToken.Required",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.APIToken.Description",
-                    "data_type": "string",
-                    "example_values": [
-                        "Authorization token for Dropbox API communication."
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.APIToken.Value",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.WorkingHours.Required",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.WorkingHours.Description",
-                    "data_type": "string",
-                    "example_values": [
-                        "Hours for the agent to operate (09:00-17:00)."
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.WorkingHours.Value",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.DefaultJitter.Required",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.DefaultJitter.Description",
-                    "data_type": "string",
-                    "example_values": [
-                        "Jitter in agent reachback interval (0.0-1.0)."
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.DefaultJitter.Value",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.SlackChannel.Required",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.SlackChannel.Description",
-                    "data_type": "string",
-                    "example_values": [
-                        "The Slack channel or DM that notifications will be sent to."
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.SlackChannel.Value",
-                    "data_type": "string",
-                    "example_values": [
-                        "#general"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.StagingKey.Required",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.StagingKey.Description",
-                    "data_type": "string",
-                    "example_values": [
-                        "Staging key for initial agent negotiation."
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.StagingKey.Value",
-                    "data_type": "string",
-                    "example_values": [
-                        "?7naSHsK{;gopLVmAR,9l^]+*hz)q/=v"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.PollInterval.Required",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.PollInterval.Description",
-                    "data_type": "string",
-                    "example_values": [
-                        "Polling interval (in seconds) to communicate with the Dropbox Server."
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.PollInterval.Value",
-                    "data_type": "string",
-                    "example_values": [
-                        "5"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.DefaultLostLimit.Required",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.DefaultLostLimit.Description",
-                    "data_type": "string",
-                    "example_values": [
-                        "Number of missed checkins before exiting"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.DefaultLostLimit.Value",
-                    "data_type": "numeric",
-                    "example_values": [
-                        10
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.StagingFolder.Required",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.StagingFolder.Description",
-                    "data_type": "string",
-                    "example_values": [
-                        "The nested Dropbox staging folder."
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.StagingFolder.Value",
-                    "data_type": "string",
-                    "example_values": [
-                        "/staging/"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.Name.Required",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.Name.Description",
-                    "data_type": "string",
-                    "example_values": [
-                        "Name for the listener."
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.listeneroptions.Name.Value",
-                    "data_type": "string",
-                    "example_values": [
-                        "dropbox"
+                        "StagerURI"
                     ],
                     "contains": [
                         "empire listener name"
                     ]
                 },
                 {
-                    "data_path": "action_result.summary.listener_found",
+                    "data_path": "action_result.data.*.Value",
                     "data_type": "string",
+                    "column_name": "Current Value",
+                    "column_order": 2,
                     "example_values": [
-                        "True"
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.Description",
+                    "data_type": "string",
+                    "column_name": "Description",
+                    "column_order": 3,
+                    "example_values": [
+                        "URI for the stager. Must use /download/. Example: /download/stager.php"
                     ]
                 }
             ],
