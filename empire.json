@@ -2552,8 +2552,6 @@
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
-                    "column_name": "status",
-                    "column_order": 0,
                     "example_values": [
                         "success"
                     ]
@@ -2582,6 +2580,8 @@
                 {
                     "data_path": "action_result.data.*.stagers.*.Name",
                     "data_type": "string",
+                    "column_name": "Stager Name",
+                    "column_order": 0,
                     "example_values": [
                         "osx/jar"
                     ],
@@ -2599,6 +2599,8 @@
                 {
                     "data_path": "action_result.data.*.stagers.*.Description",
                     "data_type": "string",
+                    "column_name": "Description",
+                    "column_order": 1,
                     "example_values": [
                         "Generates a JAR file."
                     ]
@@ -4415,7 +4417,7 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "list server",
+            "action": "list servers",
             "identifier": "list_listeners",
             "description": "Get all current listeners",
             "verbose": "Returns all current Empire listeners",
@@ -4426,8 +4428,6 @@
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
-                    "column_name": "status",
-                    "column_order": 0,
                     "example_values": [
                         "success"
                     ]
@@ -4456,6 +4456,8 @@
                 {
                     "data_path": "action_result.data.*.listeners.*.name",
                     "data_type": "string",
+                    "column_name": "Listener Name",
+                    "column_order": 1,
                     "example_values": [
                         "http"
                     ],
@@ -4473,6 +4475,8 @@
                 {
                     "data_path": "action_result.data.*.listeners.*.module",
                     "data_type": "string",
+                    "column_name": "Listener Module",
+                    "column_order": 2,
                     "example_values": [
                         "http"
                     ],
@@ -4483,6 +4487,8 @@
                 {
                     "data_path": "action_result.data.*.listeners.*.ID",
                     "data_type": "numeric",
+                    "column_name": "ID",
+                    "column_order": 0,
                     "example_values": [
                         1
                     ]
@@ -4662,6 +4668,8 @@
                 {
                     "data_path": "action_result.data.*.listeners.*.options.Host.Value",
                     "data_type": "string",
+                    "column_name": "Staging Address",
+                    "column_order": 3,
                     "example_values": [
                         "http://172.16.25.158:8080"
                     ],
