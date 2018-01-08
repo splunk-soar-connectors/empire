@@ -50,13 +50,20 @@ class EmpireConnector(BaseConnector):
         url = self._base_url + '/api/admin/login'
         data = {"username": config['username'], "password": config['password']}
         try:
-            self.save_progress("Getting authentication token.")
+            self.save_progress("Getting authentication token")
             login_resp = requests.post(url, params=None, json=data, verify=self._verify)
         except Exception as e:
             return self.set_status(phantom.APP_ERROR, "Error acquiring auth token.  Details: {0}".format(str(e)))
 
-        self._token = login_resp.json()['token']
-        self.save_progress("Got authentication successfully.")
+        if login_resp.status_code == 401:
+            self.save_progress("Incorrect Username or Password for accessing the Empire REST API")
+            return phantom.APP_ERROR
+        try:
+            self._token = login_resp.json()['token']
+            self.save_progress("Got authentication successfully.")
+        except Exception as e:
+            return self.set_status(phantom.APP_ERROR, "Error acquiring auth token.  Details: {0}".format(str(e)))
+
         return phantom.APP_SUCCESS
 
     def _process_empty_reponse(self, response, action_result):
@@ -97,7 +104,8 @@ class EmpireConnector(BaseConnector):
 
         # Please specify the status codes here
         if 200 <= r.status_code < 399:
-            return RetVal(phantom.APP_SUCCESS, resp_json)
+            if resp_json.get('error', None) is None:
+                return RetVal(phantom.APP_SUCCESS, resp_json)
 
         # You should process the error returned in the json
         message = "Error from server. Status Code: {0} Data from server: {1}".format(
@@ -719,7 +727,14 @@ class EmpireConnector(BaseConnector):
         if (phantom.is_fail(ret_val)):
             return action_result.get_status()
 
-        action_result.add_data(response)
+        try:
+            for each_option in response["listeneroptions"]:
+                data_to_add = {}
+                data_to_add["Name"] = each_option
+                data_to_add.update(response["listeneroptions"][each_option])
+                action_result.add_data(data_to_add)
+        except Exception as e:
+            return action_result.set_status(phantom.APP_ERROR, "Unable to parse server options: {0}".format(e))
 
         # Add a dictionary that is made up of the most important values from data into the summary
         summary = action_result.update_summary({})
@@ -735,7 +750,7 @@ class EmpireConnector(BaseConnector):
 
         listener_type = param['listener_type']
         listener_name = param['listener_name']
-        options = param.get('options', 'None')
+        options = param.get('options', None)
 
         if options is None:
             data = {"Name": listener_name}
