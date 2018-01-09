@@ -240,7 +240,7 @@
                     "contains": [
                         "empire module name"
                     ],
-                    "column_name": "module_name",
+                    "column_name": "Module Name",
                     "column_order": 0,
                     "example_values": [
                         "powershell/privesc/powerup/allchecks",
@@ -253,7 +253,7 @@
                     "contains": [
                         "empire agent name"
                     ],
-                    "column_name": "agent_name",
+                    "column_name": "Agent Name",
                     "column_order": 1,
                     "example_values": [
                         "CNEVH5SZ",
@@ -265,7 +265,7 @@
                 {
                     "data_path": "action_result.parameter.options",
                     "data_type": "string",
-                    "column_name": "options",
+                    "column_name": "Options",
                     "column_order": 2,
                     "example_values": [
                         "{'ComputerName': 'localhost'}"
@@ -274,7 +274,7 @@
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
-                    "column_name": "status",
+                    "column_name": "Status",
                     "column_order": 3,
                     "example_values": [
                         "success"
@@ -427,7 +427,7 @@
                     "contains": [
                         "empire module name"
                     ],
-                    "column_name": "module_name",
+                    "column_name": "Module Name",
                     "column_order": 0,
                     "example_values": [
                         "powershell/situational_awareness/network/powerview/share_finder"
@@ -436,7 +436,7 @@
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
-                    "column_name": "status",
+                    "column_name": "Status",
                     "column_order": 1,
                     "example_values": [
                         "success"
@@ -850,7 +850,7 @@
                         true,
                         false
                     ],
-                    "column_name": "OpsecSafe",
+                    "column_name": "Opsec Safe",
                     "column_order": 2
                 },
                 {
@@ -870,7 +870,7 @@
                         true,
                         false
                     ],
-                    "column_name": "NeedsAdmin",
+                    "column_name": "Needs Admin",
                     "column_order": 3
                 },
                 {
@@ -1320,7 +1320,7 @@
                     "contains": [
                         "empire agent name"
                     ],
-                    "column_name": "agent_name",
+                    "column_name": "Agent Name",
                     "column_order": 0,
                     "example_values": [
                         "CNEVH5SZ"
@@ -1329,7 +1329,7 @@
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
-                    "column_name": "status",
+                    "column_name": "Status",
                     "column_order": 1,
                     "example_values": [
                         "success"
@@ -1528,7 +1528,7 @@
                     "contains": [
                         "empire agent name"
                     ],
-                    "column_name": "agent_name",
+                    "column_name": "Agent Name",
                     "column_order": 0,
                     "example_values": [
                         "CNEVH5SZ"
@@ -1537,7 +1537,7 @@
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
-                    "column_name": "status",
+                    "column_name": "Status",
                     "column_order": 1,
                     "example_values": [
                         "success"
@@ -1712,7 +1712,7 @@
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
-                    "column_name": "status",
+                    "column_name": "Status",
                     "example_values": [
                         "success"
                     ]
@@ -2017,7 +2017,7 @@
                 {
                     "data_path": "action_result.parameter.stager_name",
                     "data_type": "string",
-                    "column_name": "stager_name",
+                    "column_name": "Stager Name",
                     "column_order": 0,
                     "example_values": [
                         "windows/hta"
@@ -2032,7 +2032,7 @@
                     "contains": [
                         "empire listener name"
                     ],
-                    "column_name": "listener_name",
+                    "column_name": "Listener Name",
                     "column_order": 1,
                     "example_values": [
                         "http"
@@ -2041,13 +2041,13 @@
                 {
                     "data_path": "action_result.parameter.options",
                     "data_type": "string",
-                    "column_name": "options",
+                    "column_name": "Options",
                     "column_order": 2
                 },
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
-                    "column_name": "status",
+                    "column_name": "Status",
                     "column_order": 3,
                     "example_values": [
                         "success"
@@ -2345,7 +2345,7 @@
                     "contains": [
                         "empire stager name"
                     ],
-                    "column_name": "stager_name",
+                    "column_name": "Stager Name",
                     "column_order": 0,
                     "example_values": [
                         "osx/macro"
@@ -2354,7 +2354,7 @@
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
-                    "column_name": "status",
+                    "column_name": "Status",
                     "column_order": 1,
                     "example_values": [
                         "success"
@@ -3437,7 +3437,7 @@
                     "contains": [
                         "empire listener type"
                     ],
-                    "column_name": "listener_type",
+                    "column_name": "Listener Type",
                     "column_order": 0,
                     "example_values": [
                         "http_mapi"
@@ -3449,7 +3449,7 @@
                     "contains": [
                         "empire listener name"
                     ],
-                    "column_name": "listener_name",
+                    "column_name": "Listener Name",
                     "column_order": 1,
                     "example_values": [
                         "bob_test"
@@ -3458,7 +3458,7 @@
                 {
                     "data_path": "action_result.parameter.options",
                     "data_type": "string",
-                    "column_name": "options",
+                    "column_name": "Options",
                     "column_order": 2,
                     "example_values": [
                         "{\"Port\": \"9090\"}"
@@ -3467,7 +3467,7 @@
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
-                    "column_name": "status",
+                    "column_name": "Status",
                     "column_order": 3,
                     "example_values": [
                         "success"
@@ -3542,7 +3542,7 @@
                     "contains": [
                         "empire listener name"
                     ],
-                    "column_name": "listener_name",
+                    "column_name": "Listener Name",
                     "column_order": 0,
                     "example_values": [
                         "http"
@@ -3551,7 +3551,7 @@
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
-                    "column_name": "status",
+                    "column_name": "Status",
                     "column_order": 1,
                     "example_values": [
                         "success"
