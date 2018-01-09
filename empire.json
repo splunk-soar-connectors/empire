@@ -60,7 +60,7 @@
             "identifier": "get_credentials",
             "description": "Get compromised credentials stored in Empire",
             "verbose": "",
-            "type": "generic",
+            "type": "investigate",
             "read_only": true,
             "parameters": {},
             "output": [
@@ -484,7 +484,7 @@
                     "data_path": "action_result.data.*.modules.*.Author",
                     "data_type": "string",
                     "example_values": [
-                        "@harmj0y"
+                        "@herman"
                     ]
                 },
                 {
@@ -499,7 +499,7 @@
                     "data_path": "action_result.data.*.modules.*.Comments",
                     "data_type": "string",
                     "example_values": [
-                        "https://github.com/PowerShellMafia/PowerSploit/blob/dev/Recon/"
+                        "herman's comment"
                     ],
                     "contains": [
                         "url"
@@ -819,7 +819,7 @@
                     "data_path": "action_result.data.*.modules.*.Name",
                     "data_type": "string",
                     "example_values": [
-                        "trollsploit"
+                        "herman edwards"
                     ],
                     "contains": [
                         "empire module name"
@@ -840,7 +840,7 @@
                     "data_path": "action_result.data.*.modules.*.Author",
                     "data_type": "string",
                     "example_values": [
-                        "@harmj0y"
+                        "@herman"
                     ]
                 },
                 {
@@ -857,7 +857,7 @@
                     "data_path": "action_result.data.*.modules.*.Comments",
                     "data_type": "string",
                     "example_values": [
-                        "https://gist.github.com/SadProcessor/3e413f9542b01ee90979"
+                        "another herman comment"
                     ],
                     "contains": [
                         "url"
@@ -1034,7 +1034,7 @@
                     "data_path": "action_result.data.*.modules.*.options.Message.Value",
                     "data_type": "string",
                     "example_values": [
-                        "You are using a pirated version of Microsoft Windows."
+                        "A herman message."
                     ]
                 },
                 {
@@ -1115,7 +1115,7 @@
                     "data_path": "action_result.data.*.modules.*.options.VideoURL.Description",
                     "data_type": "string",
                     "example_values": [
-                        "Other YouTube video URL to play instead of Thunderstruck."
+                        "A description"
                     ]
                 },
                 {
@@ -1166,7 +1166,7 @@
                     "data_path": "action_result.data.*.modules.*.options.Voice.Value",
                     "data_type": "string",
                     "example_values": [
-                        "alex"
+                        "herman"
                     ]
                 },
                 {
@@ -1188,7 +1188,7 @@
                     "data_path": "action_result.data.*.modules.*.options.MsgText.Value",
                     "data_type": "string",
                     "example_values": [
-                        "Dude, where's my car?"
+                        "Hello world"
                     ]
                 },
                 {
@@ -2395,7 +2395,7 @@
                     "data_path": "action_result.data.*.stagers.*.Author",
                     "data_type": "string",
                     "example_values": [
-                        "@harmj0y"
+                        "@herman"
                     ]
                 },
                 {
@@ -2594,7 +2594,7 @@
                     "data_path": "action_result.data.*.stagers.*.Author",
                     "data_type": "string",
                     "example_values": [
-                        "@enigma0x3"
+                        "@herman"
                     ]
                 },
                 {
@@ -2610,7 +2610,7 @@
                     "data_path": "action_result.data.*.stagers.*.Comments",
                     "data_type": "string",
                     "example_values": [
-                        "https://github.com/enigma0x3/Powershell-Infection"
+                        "A herman comment"
                     ],
                     "contains": [
                         "url"
@@ -3421,7 +3421,7 @@
                     "order": 1
                 },
                 "options": {
-                    "description": "JSON of options for listener - see output of get listener for example",
+                    "description": "JSON options for a listener - see output of get server options for examples",
                     "data_type": "string",
                     "required": false,
                     "primary": false,
