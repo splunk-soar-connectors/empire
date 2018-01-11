@@ -45,7 +45,7 @@ class EmpireConnector(BaseConnector):
 
         config = self.get_config()
         self._token = None
-        self._verify = False
+        self._verify = config.get('verify_server_cert', False)
         self._base_url = config['base_url'] + ':' + config['port']
         url = self._base_url + '/api/admin/login'
         data = {"username": config['username'], "password": config['password']}
@@ -327,15 +327,19 @@ class EmpireConnector(BaseConnector):
 
     def _parse_results(self, response):
 
-        agent_results_string = response["results"][0]["AgentResults"][0]
-        agent_results = []
-        bad_chars = '[]"'
-        for item in agent_results_string.split(","):
-            for item2 in item.split("\\r\\n"):
-                for c in bad_chars:
-                    item2 = item2.replace(c, "")
-                if item2.strip() != '' and item2.strip() != '\\n':
-                    agent_results.append({"line": item2.strip()})
+        try:
+            agent_results_string = response["results"][0]["AgentResults"][0]
+            agent_results = []
+            bad_chars = '[]"'
+
+            for item in agent_results_string.split(","):
+                for item2 in item.split("\\r\\n"):
+                    for c in bad_chars:
+                        item2 = item2.replace(c, "")
+                    if item2.strip() != '' and item2.strip() != '\\n':
+                        agent_results.append({"line": item2.strip()})
+        except:
+            return []
 
         return agent_results
 
@@ -443,13 +447,16 @@ class EmpireConnector(BaseConnector):
             # so just return from here
             return action_result.get_status()
 
+        if response["results"] == []:
+            return action_result.set_status(phantom.APP_ERROR, "Empty list returned for agent results.  Please check that agent name is correct.")
+
         agent_results = self._parse_results(response)
         action_result.add_data({"results_lines": agent_results})
 
         # Add a dictionary that is made up of the most important values from data into the summary
         summary = action_result.update_summary({})
-        summary['AgentName'] = response["results"][0]["AgentName"]
-        summary['AgentResults'] = response["results"][0]["AgentResults"]
+        summary['AgentName'] = response["results"][0].get("AgentName", "None")
+        summary['AgentResults'] = response["results"][0].get("AgentResults", "None")
 
         # Delete the agent results
         ret_val, response = self._make_rest_call('agents/{0}/results'.format(agent_name), action_result, params=None, headers=None, method="delete")
