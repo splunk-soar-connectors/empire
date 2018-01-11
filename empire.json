@@ -771,7 +771,7 @@
             "action": "list modules",
             "identifier": "list_modules",
             "description": "List all available modules in Empire",
-            "verbose": "This action also has an optional parameter to search for a module if you are not sure of the exact name",
+            "verbose": "This action also has an optional parameter to search for a module if you are not sure of the exact name.",
             "type": "generic",
             "read_only": true,
             "parameters": {
@@ -1496,7 +1496,7 @@
             "action": "terminate endpoint",
             "identifier": "kill_agent",
             "description": "Kill an agent on an endpoint in Empire",
-            "verbose": "This instructs the process on the remote machine to terminate",
+            "verbose": "This instructs the process on the remote machine to terminate.",
             "type": "generic",
             "read_only": false,
             "parameters": {
@@ -2321,7 +2321,7 @@
             "action": "get payload",
             "identifier": "get_stager",
             "description": "Get a stager by name",
-            "verbose": "Get a single stager using its name",
+            "verbose": "Get a single stager using its name.",
             "type": "generic",
             "read_only": true,
             "parameters": {
@@ -3384,7 +3384,7 @@
             "action": "create server",
             "identifier": "create_listener",
             "description": "Create a new listener",
-            "verbose": "Create a listener in Empire.  ",
+            "verbose": "Create a listener in Empire.",
             "type": "generic",
             "read_only": false,
             "parameters": {
@@ -3518,7 +3518,7 @@
             "action": "get server",
             "identifier": "get_listener",
             "description": "Get a listener by name",
-            "verbose": "Returns the listener specified by the name",
+            "verbose": "Returns the listener specified by the name.",
             "type": "generic",
             "read_only": true,
             "parameters": {
@@ -4081,7 +4081,7 @@
             "action": "list servers",
             "identifier": "list_listeners",
             "description": "Get all current listeners",
-            "verbose": "Returns all current Empire listeners",
+            "verbose": "Returns all current Empire listeners.",
             "type": "generic",
             "read_only": true,
             "parameters": {},
