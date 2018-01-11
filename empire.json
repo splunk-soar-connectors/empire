@@ -30,17 +30,28 @@
             "default": "1337",
             "order": 1
         },
+        "verify_server_cert": {
+            "description": "Verify Server Cert",
+            "data_type": "boolean",
+            "required": false,
+            "default": false,
+            "order": 2
+        },
+        "ph": {
+            "data_type": "ph",
+            "order": 3
+        },
         "username": {
             "description": "Username for accessing the Empire REST API",
             "data_type": "string",
             "required": true,
-            "order": 2
+            "order": 4
         },
         "password": {
             "description": "Password for accessing the Empire REST API",
             "data_type": "password",
             "required": true,
-            "order": 3
+            "order": 4
         }
     },
     "actions": [

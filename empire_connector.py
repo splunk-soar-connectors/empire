@@ -45,7 +45,7 @@ class EmpireConnector(BaseConnector):
 
         config = self.get_config()
         self._token = None
-        self._verify = False
+        self._verify = config.get('verify_server_cert', False)
         self._base_url = config['base_url'] + ':' + config['port']
         url = self._base_url + '/api/admin/login'
         data = {"username": config['username'], "password": config['password']}
