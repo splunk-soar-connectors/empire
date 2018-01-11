@@ -51,7 +51,7 @@
             "description": "Password for accessing the Empire REST API",
             "data_type": "password",
             "required": true,
-            "order": 4
+            "order": 5
         }
     },
     "actions": [
