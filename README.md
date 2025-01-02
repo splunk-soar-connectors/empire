@@ -10,8 +10,8 @@ Minimum Product Version: 3.0.251
 
 This app supports a variety of actions to interact with the REST API of Empire - https://github.com/powershellempire/empire
 
-### Configuration Variables
-The below configuration variables are required for this Connector to operate.  These variables are specified when configuring a Empire asset in SOAR.
+### Configuration variables
+This table lists the configuration variables required to operate Empire. These variables are specified when configuring a Empire asset in Splunk SOAR.
 
 VARIABLE | REQUIRED | TYPE | DESCRIPTION
 -------- | -------- | ---- | -----------
